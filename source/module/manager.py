@@ -59,7 +59,7 @@ class Manager:
         chunk: int,
         user_agent: str,
         cookie: str,
-        proxy: str | dict,
+        proxy: str | dict | None,
         timeout: int,
         retry: int,
         record_data: bool,

@@ -50,6 +50,7 @@ from ..module import (
     # sleep_time,
     ScriptServer,
     INFO,
+    USERAGENT,
 )
 from ..translation import _, switch_language
 
@@ -107,7 +108,9 @@ class XHS:
     USER_RN = compile(r"(?:https?://)?www\.rednote\.com/user/profile/[a-z0-9]+/\S+")
     SHARE_XHS = compile(r"(?:https?://)?www\.xiaohongshu\.com/discovery/item/\S+")
     SHARE_RN = compile(r"(?:https?://)?www\.rednote\.com/discovery/item/\S+")
-    SHORT = compile(r"(?:https?://)?xhslink\.com/[^\s\"<>\\^`{|}，。；！？、【】《》]+")
+    SHORT = compile(
+        r"(?:https?://)?xhslink\.(?:com|cn)/[^\s\"<>\\^`{|}，。；！？、【】《》]+"
+    )
     ID = compile(r"(?:explore|item)/(\S+)?\?")
     ID_USER = compile(r"user/profile/[a-z0-9]+/(\S+)?\?")
     __INSTANCE = None
@@ -124,9 +127,9 @@ class XHS:
         work_path="",
         folder_name="Download",
         name_format="发布时间 作者昵称 作品标题",
-        user_agent: str = None,
+        user_agent: str = USERAGENT,
         cookie: str = "",
-        proxy: str | dict = None,
+        proxy: str | dict | None = None,
         timeout=10,
         chunk=1024 * 1024,
         max_retry=5,
@@ -274,7 +277,7 @@ class XHS:
         self,
         url: str,
         download=False,
-        index: list | tuple = None,
+        index: list | tuple | None = None,
         data=True,
     ) -> list[dict]:
         if not (
